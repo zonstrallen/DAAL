@@ -1,0 +1,48 @@
+import java.util.Scanner;
+class Student
+{
+private String usn;
+private String name;
+private String branch;
+private String phone;
+public void read()
+{
+Scanner sc = new Scanner(System.in);
+usn = sc.nextLine();
+name = sc.nextLine();
+branch = sc.nextLine();
+phone = sc.nextLine();
+}
+public void display()
+{
+System.out.println(usn + "\t" + name + "\t" + branch + "\t" + phone);
+}
+}
+class StudentInfo
+{
+public static void main(String[] args)
+{
+// Read the number of students
+System.out.println("Enter the total number of students");
+Scanner sc = new Scanner(System.in); int n =
+sc.nextInt();
+// Create n objects
+Student[] st = new Student[n];
+for (int i = 0; i < st.length; i++)
+{
+st[i] = new Student();
+}
+// Read the student information
+for (int i = 0; i < n; i++)
+{
+System.out.println("Enter USN, Name, Branch & Phone no. for student " + (i +
+1)); st[i].read();
+}
+// Display the student information
+System.out.println("USN\tName\tBranch\tPhone");
+for (int i = 0; i < n; i++)
+{
+st[i].display();
+}
+}
+}
