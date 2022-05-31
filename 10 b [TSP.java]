@@ -1,0 +1,79 @@
+import java.util.Scanner;
+public class TSP {
+int[][] d;
+int[] visited, finaltour;
+int n, cost;
+void read() {
+Scanner sc = new Scanner(System.in);
+int i, j;
+System.out.println("Enter the total cities ");
+n = sc.nextInt() + 1;
+d = new int[n][n];
+visited = new int[n];
+// It is assumed that sum of all distances is less than 99
+System.out.println("Enter the distance matrix (99 for no connectivity)");
+for (i = 1; i < n; i++) {
+for (j = 1; j < n; j++) {
+d[i][j] = sc.nextInt();
+}
+visited[i] = 0;
+}
+finaltour = new int[n];
+for (i = 1; i < n; i++) {
+finaltour[i] = i;
+}
+}
+void tsp_dyn_prg() {
+cost = tsp_dp(finaltour, 1);
+System.out.println("\nTraversal Path using Dyn. Prgg:");
+for (int i = 1; i < n; i++) {
+System.out.print(finaltour[i] + " > ");
+}
+System.out.println("1");
+System.out.println("Minimum cost : " + cost);
+}
+int tsp_dp(int[] tour, int start)
+{
+int i, j, k;
+/* Loop counters. */
+int[] temp = new int[n];
+/* Temporary array during calculations. */
+int[] mintour = new int[n];
+/* Minimal tour array. */
+int mincost;
+/* Minimal cost. */
+int ccost;
+/* Current cost. */
+/* End of recursion condition. */
+if (start == n - 2) {
+return d[tour[n - 2]][tour[n - 1]] + d[tour[n -
+1]][1]; }
+/* Compute the tour starting from the current city.
+*/ mincost = 99;
+for (i = start + 1; i < n; i++) {
+for (j = 1; j < n; j++) {
+temp[j] = tour[j];
+}
+/* Adjust positions. */
+temp[start + 1] = tour[i];
+temp[i] = tour[start + 1];
+/* Found a better cycle? (Recurrence derivable.) */
+if (d[tour[start]][tour[i]] + (ccost = tsp_dp(temp, start + 1)) < mincost)
+{ mincost = d[tour[start]][tour[i]] + ccost;
+for (k = 1; k < n; k++) {
+mintour[k] = temp[k];
+}
+}
+}
+/* Set the minimum-tour array. */
+for (i = 1; i < n; i++) {
+tour[i] = mintour[i];
+}
+return mincost;
+}
+public static void main(String[] args) {
+TSP t = new TSP();
+t.read();
+t.tsp_dyn_prg();
+}
+}
