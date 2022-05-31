@@ -1,0 +1,65 @@
+import java.util.Scanner;
+public class Knapsack01_Greedy {
+static int[] p, wt;
+static int C, n;
+static void knapsack01_Gdy() {
+int i, j, t;
+int[] itemNo = new int[n + 1];
+double[] ratio = new double[n + 1];
+double r;
+for (i = 1; i <= n; i++) {
+itemNo[i] = i;
+ratio[i] = p[i] / wt[i];
+}
+// Sort the items using bubble sort according to profit/weight ratio
+// in descending order
+for (i = 1; i <= n; i++) {
+for (j = 1; j <= n - i; j++) {
+if (ratio[j] < ratio[j + 1]) {
+// swap itemNo[j] and itemNo[j+1]
+t = itemNo[j]; itemNo[j] = itemNo[j + 1]; itemNo[j + 1] =
+t; // swap wt[j] and wt[j+1]
+t = wt[j]; wt[j] = wt[j + 1]; wt[j + 1] = t;
+// swap p[j] and
+p[j+1] t = p[j]; p[j] = p[j
++ 1]; p[j + 1] = t;
+// swap ratio[j] and ratio[j+1]
+r = ratio[j]; ratio[j] = ratio[j + 1]; ratio[j + 1] = r;
+}
+}
+}
+int c = C, profit = 0;
+for (i = 1; i <= n; i++) {
+if (c >= wt[i]) {
+System.out.println("Item " + itemNo[i] +
+"(weight:" + wt[i] + ", profit:" + p[i] + ")");
+profit = profit + p[i];
+c = c - wt[i];
+}
+}
+System.out.println("Total profit of the items added to knapsack = " + profit);
+}
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter the number of items: ");
+n = sc.nextInt();
+System.out.println("Enter the items profit: ");
+p = new int[n + 1];
+for (int i = 1; i <= n; i++) {
+// We store from index 1 to
+n p[i] = sc.nextInt();
+Design and Analysis of Algorithms Lab Manual 2019-2020
+Dept of CSE,CEC Page 26
+}
+System.out.println("Enter the items  weights: ");
+wt = new int[n + 1];
+for (int i = 1; i <= n; i++) {
+wt[i] = sc.nextInt();
+}
+// We store from index 1 to n
+System.out.println("Enter the maximum capacity: ");
+C = sc.nextInt();
+System.out.println("\n0/1 Knapsack using Greedy Method");
+knapsack01_Gdy();
+}
+}
